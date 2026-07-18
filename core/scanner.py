@@ -2,7 +2,6 @@ from pathlib import Path
 from models.song import Song
 
 
-
 class MusicScanner:
 
     def __init__(self):
@@ -18,22 +17,20 @@ class MusicScanner:
             return []
 
         for file in folder.rglob("*.mp3"):
-
-            self.songs.append(
-
-                Song(
-                    name=file.stem,
-                    filename=file.name,
-                    path=str(file),
-                    folder=file.parent.name,
-                    extension=file.suffix.lower(),
-                    size=file.stat().st_size
+            try:
+                self.songs.append(
+                    Song(
+                        name=file.stem,
+                        filename=file.name,
+                        path=str(file),
+                        folder=file.parent.name,
+                        extension=file.suffix.lower(),
+                        size=file.stat().st_size
+                    )
                 )
-
-)
-
-            self.songs.append(song)
-
+            except Exception as e:
+                print(f"No se pudo leer: {file} ({e})")
+                
         self.songs.sort(key=lambda song: song.name.lower())
 
         return self.songs
