@@ -5,10 +5,16 @@ from models.song import Song
 
 class SongRow(ctk.CTkFrame):
 
-    def __init__(self, master, song: Song):
+    def __init__(
+        self,
+        master,
+        song,
+        on_selection_changed=None
+    ):
         super().__init__(master)
 
         self.song = song
+        self.on_selection_changed = on_selection_changed
 
         # Hace que la columna del nombre ocupe todo el espacio
         self.grid_columnconfigure(1, weight=1)
@@ -64,3 +70,6 @@ class SongRow(ctk.CTkFrame):
     def on_toggle(self):
 
         self.song.selected = self.checkbox.get() == 1
+
+        if self.on_selection_changed:
+         self.on_selection_changed()

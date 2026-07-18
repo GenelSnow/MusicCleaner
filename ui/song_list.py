@@ -5,7 +5,12 @@ from ui.song_row import SongRow
 
 class SongList(ctk.CTkScrollableFrame):
 
-    def __init__(self, master):
+    def __init__(
+        self,
+        master,
+        on_selection_changed=None
+    ):
+        self.on_selection_changed = on_selection_changed
         super().__init__(master)
 
         self.grid_columnconfigure(0, weight=1)
@@ -23,7 +28,11 @@ class SongList(ctk.CTkScrollableFrame):
         # Crear nuevas filas
         for i, song in enumerate(songs):
 
-            row = SongRow(self, song)
+            row = SongRow(
+            self,
+            song,
+            on_selection_changed=self.on_selection_changed
+            )
 
             row.grid(
                 row=i,
