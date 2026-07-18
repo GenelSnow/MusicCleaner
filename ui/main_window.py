@@ -170,7 +170,12 @@ class MainWindow(ctk.CTk):
     
 
     def search_song(self, text):
-        print(text)
+
+        songs = self.library.search(text)
+
+        self.song_list.load_songs(songs)
+
+        self.update_status()
 
     def select_recommended(self):
         print("Seleccionar recomendadas")

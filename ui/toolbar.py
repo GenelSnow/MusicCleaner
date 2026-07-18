@@ -28,17 +28,31 @@ class Toolbar(ctk.CTkFrame):
             pady=10
         )
 
-        # Buscar
+        # ---------------- Buscar ----------------
+
+        self.search_var = ctk.StringVar()
+
         self.search = ctk.CTkEntry(
             self,
+            textvariable=self.search_var,
             placeholder_text="Buscar..."
         )
+
         self.search.grid(
             row=0,
             column=1,
             sticky="ew",
             padx=10
         )
+
+        if on_search:
+
+            self.search_var.trace_add(
+                "write",
+                lambda *args: on_search(
+                    self.search_var.get()
+                )
+            )
 
         # Ejecutar búsqueda al presionar Enter
         if on_search:

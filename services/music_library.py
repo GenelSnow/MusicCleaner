@@ -1,4 +1,4 @@
-from services.scanner import MusicScanner
+from core.scanner import MusicScanner
 from models.song import Song
 
 
@@ -35,3 +35,20 @@ class MusicLibrary:
 
     def selected_size(self) -> int:
         return sum(song.size for song in self.selected_songs())
+    
+    def search(self, text: str):
+
+        text = text.lower().strip()
+
+        if not text:
+            return self.songs
+
+        return [
+
+            song
+
+            for song in self.songs
+
+            if text in song.filename.lower()
+
+        ]

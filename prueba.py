@@ -1,4 +1,4 @@
-from services.scanner import MusicScanner
+from core.scanner import MusicScanner
 
 scanner = MusicScanner()
 
