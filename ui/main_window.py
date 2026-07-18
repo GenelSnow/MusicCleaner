@@ -7,6 +7,7 @@ from ui.song_list import SongList
 from ui.status_bar import StatusBar
 
 
+
 class MainWindow(ctk.CTk):
 
     def __init__(self):
@@ -62,6 +63,8 @@ class MainWindow(ctk.CTk):
             padx=10,
             pady=(5, 10)
         )
+
+        
 
     # ==========================
     # Eventos

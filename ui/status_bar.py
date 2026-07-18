@@ -8,11 +8,19 @@ class StatusBar(ctk.CTkFrame):
 
         self.label = ctk.CTkLabel(
             self,
-            text="🎵 0 canciones     ☑ 0 seleccionadas     🗑 0 eliminar"
+            text=""
         )
 
         self.label.pack(
+            anchor="w",
             padx=10,
-            pady=8,
-            anchor="w"
+            pady=8
+        )
+
+        self.update_stats(0, 0)
+
+    def update_stats(self, total, selected):
+
+        self.label.configure(
+            text=f"🎵 {total} canciones     ☑ {selected} seleccionadas"
         )

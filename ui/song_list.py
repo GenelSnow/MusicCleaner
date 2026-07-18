@@ -14,13 +14,13 @@ class SongList(ctk.CTkScrollableFrame):
 
     def load_songs(self, songs):
 
-        # Elimina filas anteriores
+        # Eliminar filas anteriores
         for row in self.rows:
             row.destroy()
 
         self.rows.clear()
 
-        # Crea las nuevas filas
+        # Crear nuevas filas
         for i, song in enumerate(songs):
 
             row = SongRow(self, song)
