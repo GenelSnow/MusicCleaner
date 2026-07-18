@@ -1,6 +1,6 @@
 from pathlib import Path
-
 from models.song import Song
+
 
 
 class MusicScanner:
@@ -19,11 +19,18 @@ class MusicScanner:
 
         for file in folder.rglob("*.mp3"):
 
-            song = Song(
-                name=file.name,
-                path=file,
-                size=file.stat().st_size
-            )
+            self.songs.append(
+
+                Song(
+                    name=file.stem,
+                    filename=file.name,
+                    path=str(file),
+                    folder=file.parent.name,
+                    extension=file.suffix.lower(),
+                    size=file.stat().st_size
+                )
+
+)
 
             self.songs.append(song)
 
