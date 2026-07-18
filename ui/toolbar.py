@@ -3,14 +3,23 @@ import customtkinter as ctk
 
 class Toolbar(ctk.CTkFrame):
 
-    def __init__(self, master):
+    def __init__(
+        self,
+        master,
+        on_open=None,
+        on_search=None,
+        on_recommended=None,
+        on_delete=None
+    ):
         super().__init__(master)
 
         self.grid_columnconfigure(1, weight=1)
 
+        # Abrir carpeta
         self.open_button = ctk.CTkButton(
             self,
-            text="📂 Abrir carpeta"
+            text="📂 Abrir carpeta",
+            command=on_open
         )
         self.open_button.grid(
             row=0,
@@ -19,6 +28,7 @@ class Toolbar(ctk.CTkFrame):
             pady=10
         )
 
+        # Buscar
         self.search = ctk.CTkEntry(
             self,
             placeholder_text="Buscar..."
@@ -30,9 +40,18 @@ class Toolbar(ctk.CTkFrame):
             padx=10
         )
 
+        # Ejecutar búsqueda al presionar Enter
+        if on_search:
+            self.search.bind(
+                "<Return>",
+                lambda event: on_search(self.search.get())
+            )
+
+        # Seleccionar recomendadas
         self.auto_button = ctk.CTkButton(
             self,
-            text="⭐ Recomendadas"
+            text="⭐ Recomendadas",
+            command=on_recommended
         )
         self.auto_button.grid(
             row=0,
@@ -40,11 +59,13 @@ class Toolbar(ctk.CTkFrame):
             padx=10
         )
 
+        # Eliminar
         self.delete_button = ctk.CTkButton(
             self,
             text="🗑 Eliminar",
             fg_color="#C0392B",
-            hover_color="#922B21"
+            hover_color="#922B21",
+            command=on_delete
         )
         self.delete_button.grid(
             row=0,

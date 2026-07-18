@@ -1,1 +1,1 @@
-    
+class SongRow(ctk.CTkFrame):
