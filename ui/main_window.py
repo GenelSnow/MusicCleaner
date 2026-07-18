@@ -95,17 +95,17 @@ class MainWindow(ctk.CTk):
     def update_status(self):
 
         self.status.update_stats(
-        total=self.library.count(),
-        selected=self.library.selected_count()
-    )
-    
-    
-
-    def update_status(self):
-
-        self.status.update_stats(
             total=self.library.count(),
             selected=self.library.selected_count()
+        )
+    def search_song(self, text):
+
+        if self.search_job is not None:
+            self.after_cancel(self.search_job)
+
+        self.search_job = self.after(
+        300,
+        lambda: self.perform_search(text)
         )
 
 
