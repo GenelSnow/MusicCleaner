@@ -118,6 +118,14 @@ class MainWindow(ctk.CTk):
         self.update_status()
 
         self.search_job = None
+        
+    def select_recommended(self):
+
+        self.library.select_recommended()
+
+        self.song_list.load_songs(self.library.songs)
+
+        self.update_status()
 
     def select_recommended(self):
         print("Seleccionar recomendadas")

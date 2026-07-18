@@ -1,10 +1,13 @@
 from core.scanner import MusicScanner
 from models.song import Song
+from services.recommendation_engine import RecommendationEngine
+from pathlib import Path
 
 
 class MusicLibrary:
     def __init__(self):
         self._scanner = MusicScanner()
+        self._recommendation = RecommendationEngine()
         self.songs: list[Song] = []
 
     def load(self, folder: str) -> list[Song]:
@@ -52,3 +55,38 @@ class MusicLibrary:
             if text in song.filename.lower()
 
         ]
+    def load(self, folder: str) -> list[Song]:
+
+        self.songs = self._scanner.scan(folder)
+
+        for song in self.songs:
+            song.analysis = self._recommendation.analyze(song)
+
+        return self.songs
+    
+    def select_recommended(self):
+
+        self.clear_selection()
+
+        for song in self.songs:
+
+         if song.analysis.recommended:
+            song.selected = True
+    
+    def delete_selected(self):
+
+        deleted = 0
+
+        for song in self.selected_songs():
+
+            try:
+
+                Path(song.path).unlink()
+
+                deleted += 1
+
+            except Exception as e:
+
+                print(e)
+
+        return deleted
