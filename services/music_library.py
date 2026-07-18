@@ -24,3 +24,14 @@ class MusicLibrary:
     def select_all(self):
         for song in self.songs:
             song.selected = True
+    def selected_songs(self) -> list[Song]:
+        return [song for song in self.songs if song.selected]
+    
+    def unselected_songs(self) -> list[Song]:
+        return [song for song in self.songs if not song.selected]
+    
+    def total_size(self) -> int:
+        return sum(song.size for song in self.songs)
+
+    def selected_size(self) -> int:
+        return sum(song.size for song in self.selected_songs())
