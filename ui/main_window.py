@@ -101,14 +101,11 @@ class MainWindow(ctk.CTk):
     
     
 
-    def search_song(self, text):
+    def update_status(self):
 
-        if self.search_job is not None:
-            self.after_cancel(self.search_job)
-
-        self.search_job = self.after(
-            300,
-            lambda: self.perform_search(text)
+        self.status.update_stats(
+            total=self.library.count(),
+            selected=self.library.selected_count()
         )
 
 
