@@ -17,7 +17,7 @@ class SongRow(ctk.CTkFrame):
         self.on_selection_changed = on_selection_changed
 
         # Hace que la columna del nombre ocupe todo el espacio
-        self.grid_columnconfigure(1, weight=1)
+        self.grid_columnconfigure(3, weight=1)
 
         # ---------------- Checkbox ----------------
 
@@ -37,6 +37,38 @@ class SongRow(ctk.CTkFrame):
         if self.song.selected:
             self.checkbox.select()
 
+    # ---------------- Recomendación ----------------
+
+        self.recommend_label = ctk.CTkLabel(
+            self,
+            text="●",
+            width=30,
+            text_color="#666666",
+            font=("Segoe UI", 16)
+        )
+
+        self.recommend_label.grid(
+            row=0,
+            column=1,
+            padx=5
+        )
+
+        # ---------------- Score ----------------
+
+        self.score_label = ctk.CTkLabel(
+            self,
+            text="---",
+            width=45,
+            font=("Segoe UI", 13, "bold"),
+            text_color="#AAAAAA"
+        )
+
+        self.score_label.grid(
+            row=0,
+            column=2,
+            padx=5
+        )
+
         # ---------------- Nombre ----------------
 
         self.name_label = ctk.CTkLabel(
@@ -48,22 +80,22 @@ class SongRow(ctk.CTkFrame):
 
         self.name_label.grid(
             row=0,
-            column=1,
+            column=3,
             sticky="ew",
             padx=5
         )
 
-        # ---------------- Tamaño ----------------
+    # ---------------- Tamaño ----------------
 
         self.size_label = ctk.CTkLabel(
             self,
-            text=f"{self.song.size_mb:.2f} MB",
+            text=self.format_size(self.song.size),
             width=80
         )
 
         self.size_label.grid(
             row=0,
-            column=2,
+            column=4,
             padx=10
         )
 
@@ -73,3 +105,9 @@ class SongRow(ctk.CTkFrame):
 
         if self.on_selection_changed:
          self.on_selection_changed()
+
+    def format_size(self, size):
+
+        mb = size / (1024 * 1024)
+
+        return f"{mb:.2f} MB"
