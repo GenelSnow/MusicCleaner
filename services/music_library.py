@@ -77,16 +77,23 @@ class MusicLibrary:
 
         deleted = 0
 
-        for song in self.selected_songs():
+        remaining = []
 
-            try:
+        for song in self.songs:
 
-                Path(song.path).unlink()
+            if song.selected:
 
-                deleted += 1
+                try:
+                    Path(song.path).unlink()
+                    deleted += 1
 
-            except Exception as e:
+                except Exception:
+                    remaining.append(song)
 
-                print(e)
+            else:
+
+                remaining.append(song)
+
+        self.songs = remaining
 
         return deleted

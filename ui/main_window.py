@@ -5,6 +5,7 @@ from services.music_library import MusicLibrary
 from ui.toolbar import Toolbar
 from ui.song_list import SongList
 from ui.status_bar import StatusBar
+from tkinter import messagebox
 
 
 
@@ -118,7 +119,7 @@ class MainWindow(ctk.CTk):
         self.update_status()
 
         self.search_job = None
-        
+
     def select_recommended(self):
 
         self.library.select_recommended()
@@ -131,5 +132,25 @@ class MainWindow(ctk.CTk):
         print("Seleccionar recomendadas")
 
     def delete_selected(self):
-        print("Eliminar")
 
+        count = self.library.selected_count()
+
+        if count == 0:
+            return
+
+        if not messagebox.askyesno(
+            "Eliminar",
+            f"¿Eliminar {count} canciones?"
+        ):
+            return
+
+        deleted = self.library.delete_selected()
+
+        self.song_list.load_songs(self.library.songs)
+
+        self.update_status()
+
+        messagebox.showinfo(
+            "Completado",
+            f"Se eliminaron {deleted} canciones."
+        )
